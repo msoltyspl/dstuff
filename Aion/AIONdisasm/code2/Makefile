@@ -1,0 +1,19 @@
+CC = gcc
+CFLAGS = -Wall -pedantic -std=c99 -O2 -fomit-frame-pointer -DNDEBUG -I/usr/local/include -m32 -march=pentium4 -mfpmath=sse
+#CFLAGS = -Wall -O0 -g -pg -I/usr/local/include -m32 -pedantic -std=c99
+LDFLAGS = --as-needed -s -L/usr/local/lib
+#LDFLAGS = -L/usr/local/lib
+CPPFLAGS = -I/usr/local/include
+EXES = AIONdisasm
+
+all : $(EXES)
+
+$(EXES) :
+	$(CC) -o $@ $^ $(LDFLAGS) $(CFLAGS) -liconv.dll
+
+.PHONY : clean
+clean:
+	rm -f *.o $(EXES) *.exe
+
+#dependencies, fuck *.h
+AIONdisasm: AIONdisasm.o hashptr.o pooler.o xmlblob.o textconv.o drivers.o bfile.o
